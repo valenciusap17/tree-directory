@@ -1,5 +1,21 @@
 #include <stdio.h>
 #include <dirent.h>
+#include <limits.h>
+#include <string.h>
+
+int dive(int *level, const char *path) {
+    *level += 1;
+    const char *last_slash = strchr(path, "/");
+    const char *cur_dir = last_slash ? last_slash + 1 : path;
+    print_with_indent(*level, cur_dir);
+
+    // while ((entry = readdir(dir)) != NULL) {
+    //     if (entry->d_type == DT_DIR) {
+            
+    //     }
+    //     printf("%s\n", entry->d_name);
+    // }
+}
 
 int walk(const char *path) {
     DIR *dir;
@@ -11,8 +27,16 @@ int walk(const char *path) {
         return 1;
     }
 
+    int *level = 0;
     while ((entry = readdir(dir)) != NULL) {
-        printf("%s\n", entry->d_name);
+        const char *name = entry->d_name;
+        if (entry->d_type == DT_DIR) {
+            char child[PATH_MAX];
+            snprintf(child, sizeof(child), "%s/%s", path, *name);
+            dive(level, child);
+        } else {
+            print_with_indent(level, *name);
+        }
     }
     
     closedir(dir);
