@@ -16,16 +16,16 @@ int print_with_indent(int level, const char *text, int last) {
 
     if (level == 0) {
         int spaces = level * 4;
-        printf("%*s%s%s\n", spaces, "", BRANCH, text);
+        printf("%*s%s%s\n", spaces, "", LAST, text);
         return 0;
     }
     if (last == 1) {
-        int spaces = (level-1) * 4;
-        printf("%s%*s%s%s\n", PIPE, spaces, "", LAST, text);
+        int spaces = level * 4;
+        printf("%*s%s%s\n", spaces, "", LAST, text);
         return 0;
     }
 
-    int spaces = (level-1) * 4;
-    printf("%s%*s%s%s\n", PIPE, spaces, "", BRANCH, text);
+    int spaces = (level) * 4;
+    printf("%*s%s%s\n", spaces, "", BRANCH, text);
     return 0;
 }

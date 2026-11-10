@@ -17,7 +17,7 @@ int dive(int level, const char *path) {
     // print current directory
     const char *last_slash = strrchr(path, '/');
     const char *cur_dir = last_slash ? last_slash + 1 : path;
-    print_with_indent(level, cur_dir, 0);
+    print_with_indent(level, cur_dir, 1);
     
     level += 1;
 
@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
     
     printf("Path: %s \n", path);
     
-    char *indentations = BRANCH;
+    char *indentations = LAST;
     int err = walk(path, indentations);
     return err;
 }
